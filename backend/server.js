@@ -1,4 +1,5 @@
-require("dotenv").config();
+const dotenv = require('dotenv');
+dotenv.config();
 const express = require("express");
 const cors = require("cors");
 
@@ -26,14 +27,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Webpdfizer gto" });
+  res.json({ message: "Welcome todsd Webpdfizer" });
 });
 
 
 require("./app/routes/turorial.routes")(app);
 
 // set port, listen for requests
-const PORT = process.env.NODE_DOCKER_PORT ;
+const PORT = 8900 ;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
