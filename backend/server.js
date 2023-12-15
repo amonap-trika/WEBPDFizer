@@ -37,7 +37,7 @@ require("./app/routes/website_pdf.routes")(app);
 
 
 // set port, listen for requests
-const PORT = 8900;
+const PORT = process.env.NODE_DOCKER_PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
