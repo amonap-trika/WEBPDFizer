@@ -32,9 +32,12 @@ app.get("/", (req, res) => {
 
 
 require("./app/routes/turorial.routes")(app);
+require("./app/routes/website_link.routes")(app);
+require("./app/routes/website_pdf.routes")(app);
+
 
 // set port, listen for requests
-const PORT = 8900 ;
+const PORT = 8900;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
