@@ -2,8 +2,20 @@ const dotenv = require('dotenv');
 dotenv.config();
 const express = require("express");
 const cors = require("cors");
+const path = require('path');
 
+// Constants
+const PORT = process.env.PORT || 8080;
+const HOST = '0.0.0.0';
+
+const CLIENT_BUILD_PATH = path.join(__dirname, '../../client/build');
+
+// App
 const app = express();
+
+// Static files
+app.use(express.static(CLIENT_BUILD_PATH));
+
 
 // var corsOptions = {
 //   origin:  "http://localhost:8888/" || '*'
@@ -17,17 +29,17 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// const db = require("./app/models");
+const db = require("./app/models");
 
-// db.sequelize.sync();
-// // drop the table if it already exists
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
+db.sequelize.sync();
+// drop the table if it already exists
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome todsd Webpdfizer" });
+  res.json({ message: "Welcome to Webpdfizer" });
 });
 
 
@@ -37,7 +49,6 @@ require("./app/routes/website_pdf.routes")(app);
 
 
 // set port, listen for requests
-const PORT = process.env.NODE_DOCKER_PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

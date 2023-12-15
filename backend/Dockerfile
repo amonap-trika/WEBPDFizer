@@ -1,7 +1,12 @@
-FROM node:14
+FROM node:12.10.0-alpine
 
-WORKDIR /backend
-COPY package.json .
+WORKDIR /usr/app
+
+COPY package*.json ./
 RUN npm install
+
 COPY . .
-CMD npm run dev
+
+EXPOSE $NODE_DOCKER_PORT
+
+CMD ["npm", "start"]

@@ -6,15 +6,15 @@ Install docker desktop :
 
 Git clone repo : https://github.com/trikatechnologies/WEBPDFizer.git
 
-## ********************************************** For Local setup *******************************************************
+## ****************** For Local setup ***************************
 
 ## Run the System
 We can easily run the whole with only a single command:
 ```bash
-docker compose up
+docker compose up -d
 ```
 
-## ********************************************** Stop / Start project *******************************************************
+## ****************** Stop / Start project ***************************
 
 
 ## check running containers 
@@ -34,7 +34,7 @@ docker ps -a
 docker start webpdfizer-frontend-1 webpdfizer-phpmyadmin-1 webpdfizer-backend-1 webpdfizer-mysqldb-1
 ```
 
-## ********************************************** For removing the containers & images *******************************************************
+## ****************** For removing the containers & images ***************************
 
 ## To stop all running containers and remove all stopped containers
 If you need to remove all containers, use the command:
