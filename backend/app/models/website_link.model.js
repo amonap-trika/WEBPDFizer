@@ -1,22 +1,34 @@
 module.exports = (sequelize, Sequelize) => {
     const Website_link = sequelize.define("website_link", {
       id: {
-        type: Sequelize.STRING
+        type:Sequelize.INTEGER,
+        autoIncrement:true,
+        allowNull:false,
+        primaryKey:true
       },
       website_id: {
-        type: Sequelize.STRING
+        type:Sequelize.INTEGER,
+        allowNull:false
       },
       link: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(500),
+        allowNull:false
       },
-      status: {
-        type: Sequelize.STRING
+      pdf_generation_status: {
+        type: Sequelize.ENUM,
+        values: ['Y','N','E']
       },
-      filename: {
-        type: Sequelize.STRING
+      pdf_clubbing_status: {
+        type: Sequelize.ENUM,
+        values: ['Y','N','E']
+      },
+      pdf_name: {
+        type: Sequelize.STRING(100),
+        allowNull:false
       },
       pdf_part: {
-        type: Sequelize.STRING
+        type:Sequelize.INTEGER,
+        allowNull:false
       }
     });
   
