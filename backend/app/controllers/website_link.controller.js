@@ -5,9 +5,9 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Website_link
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.url) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "url should be there"
     });
     return;
   }

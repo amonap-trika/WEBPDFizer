@@ -6,7 +6,6 @@ const path = require('path');
 
 // Constants
 const PORT = process.env.PORT || 8080;
-const HOST = '0.0.0.0';
 
 const CLIENT_BUILD_PATH = path.join(__dirname, '../../client/build');
 
@@ -32,18 +31,21 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./app/models");
 
 db.sequelize.sync();
+
+// db.sequelize.sync({ force: true });
+// console.log("I am here");
+
 // drop the table if it already exists
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-});
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and re-sync db.");
+// });
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Webpdfizer" });
+  res.json({ message: "Welcome to Webpdfizer dfdf" });
 });
 
 
-require("./app/routes/turorial.routes")(app);
 require("./app/routes/website_link.routes")(app);
 require("./app/routes/website_pdf.routes")(app);
 

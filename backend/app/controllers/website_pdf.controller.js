@@ -5,9 +5,9 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Website_pdf
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!(req.body.url)) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Website url is required"
     });
     return;
   }
@@ -15,8 +15,9 @@ exports.create = (req, res) => {
   // Create a Website_pdf
   const website_pdf = {
     title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    url: req.body.url,
+    status:'0',
+    user_id:1
   };
 
   // Save Website_pdf in the database
