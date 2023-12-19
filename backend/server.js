@@ -4,6 +4,9 @@ const express = require("express");
 const cors = require("cors");
 const path = require('path');
 
+//const fetchUrlsFromWebsite = require('./app/library/sitemap');
+const website_links = require('./app/controllers/website_link.controller');
+
 // Constants
 const PORT = process.env.PORT || 8080;
 
@@ -29,7 +32,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const db = require("./app/models");
-
 db.sequelize.sync();
 
 // db.sequelize.sync({ force: true });
@@ -43,6 +45,23 @@ db.sequelize.sync();
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Webpdfizer dfdf" });
+});
+
+
+app.get("/api/cronjob", (req, res) => {
+  website_links.findAll({
+    limit: 1,
+    where: { status: '0' },
+}).then(function (result) {
+
+  res.json(result);
+ // console.log(result);
+
+  //fetchUrlsFromWebsite
+});
+  //console.log(result);
+ // 
+  // res.json(result);
 });
 
 

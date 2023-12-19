@@ -1,6 +1,7 @@
 const db = require("../models");
 const Website_pdf = db.website_pdfs;
 const Op = db.Sequelize.Op;
+const getAllUrlsFromSitemapIndex = require("../cronjob/withoutCronjob");
 
 // Create and Save a new Website_pdf
 exports.create = (req, res) => {
@@ -20,10 +21,32 @@ exports.create = (req, res) => {
     user_id:1
   };
 
+  
+
   // Save Website_pdf in the database
   Website_pdf.create(website_pdf)
     .then(data => {
       res.send(data);
+      getAllUrlsFromSitemapIndex(req.body.url);
+
+
+// Example usage
+const pdfOutputPath = 'output.pdf';
+
+(async () => {
+  const urls = await getAllUrlsFromSitemapIndex(siteUrl);
+
+  const pdfPaths = [];
+  for (let i = 0; i < urls.length; i++) {
+    const url = urls[i];
+    const pdfPath = `url_${i + 1}`;
+    await convertUrlToPdf(url, pdfPath);
+    pdfPaths.push(`${pdfPath}.pdf`);
+  }
+
+  await mergePdfs(pdfPaths, pdfOutputPath);
+  console.log('Merged PDFs:', pdfOutputPath);
+})();
     })
     .catch(err => {
       res.status(500).send({
@@ -35,8 +58,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const url = req.query.url;
+  var condition = url ? { url: { [Op.like]: `%${url}%` } } : null;
 
   Website_pdf.findAll({ where: condition })
     .then(data => {
@@ -142,6 +165,21 @@ exports.findAllPublished = (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving website_pdfs."
+      });
+    });
+};
+
+
+exports.findTop = (req, res) => {
+  const id = req.params.id;
+
+  Website_pdf.findByPk(id)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Website_pdf with id=" + id
       });
     });
 };
